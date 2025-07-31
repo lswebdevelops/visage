@@ -1,7 +1,7 @@
 import { TRAININGTYPES_URL, UPLOAD_URL } from "../constants";
 import { apiSlice } from "./apiSlice";
 
-export const TrainingTypesApiSlice = apiSlice.injectEndpoints({
+export const ClientTypesApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getTrainingTypes: builder.query({
       query: ({ keyword, pageNumber }) => ({
@@ -60,4 +60,4 @@ export const {
   useUpdateTrainingTypeMutation,  
   useDeleteTrainingTypeMutation,
   useCreateReviewMutation,
-} = TrainingTypesApiSlice;
+} = ClientTypesApiSlice;

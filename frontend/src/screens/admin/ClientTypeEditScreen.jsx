@@ -1,14 +1,10 @@
 import { useState, useEffect } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
-import { Form, Button, Row, Col, Card, Badge } from "react-bootstrap";
-import Message from "../../components/Message";
-import Loader from "../../components/Loader";
-import FormContainer from "../../components/FormContainer";
+import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import {
   useUpdateTrainingTypeMutation,
   useGetTrainingTypeDetailsQuery,
-} from "../../slices/trainingTypesApiSlice";
+} from "../../slices/clientTypesApiSlice.js";
 import { TRAINING_CODE_TO_MUSCLE_GROUP } from "../../utils/constants.js";
 import { div } from "motion/react-client";
 
@@ -125,7 +121,7 @@ const EXERCISE_DATA = {
   ],
 };
 
-const TrainingTypeEditScreen = () => {
+const ClientTypeEditScreen = () => {
   const { id: trainingTypeId } = useParams();
 
   const [name, setName] = useState("");
@@ -225,4 +221,4 @@ const TrainingTypeEditScreen = () => {
   );
 };
 
-export default TrainingTypeEditScreen;
+export default ClientTypeEditScreen;

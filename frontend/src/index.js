@@ -21,8 +21,8 @@ import "./assets/styles/index.css";
 import "./assets/styles/bootstrap.custom.css";
 import App from "./App";
 import ProfileScreen from "./screens/ProfileScreen";
-import TrainingTypeListScreen from "./screens/admin/TrainingTypeListScreen";
-import TrainingTypeEditScreen from "./screens/admin/TrainingTypeEditScreen";
+import ClientTypeListScreen from "./screens/admin/ClientTypeListScreen";
+import ClientTypeEditScreen from "./screens/admin/ClientTypeEditScreen";
 import UserListScreen from "./screens/admin/UserListScreen";
 import UserEditScreen from "./screens/admin/UserEditScreen";
 import BlogListScreen from "./screens/admin/BlogListScreen";
@@ -67,15 +67,15 @@ const router = createBrowserRouter(
       <Route path="" element={<AdminRoute />}>
         <Route
           path="/admin/api_use/"
-          element={<TrainingTypeListScreen />}
+          element={<ClientTypeListScreen />}
         />
         <Route
           path="/admin/api_use/:pageNumber/"
-          element={<TrainingTypeListScreen />}
+          element={<ClientTypeListScreen />}
         />
         <Route
           path="/admin/trainingType/:id/edit"
-          element={<TrainingTypeEditScreen />}
+          element={<ClientTypeEditScreen />}
         />
         <Route path="/admin/userlist/" element={<UserListScreen />} />
         <Route path="/admin/user/:id/edit" element={<UserEditScreen />} />

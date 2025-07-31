@@ -41,6 +41,21 @@ export const userApiSlice = apiSlice.injectEndpoints({
         url: `${USERS_URL}/logout`, // URL para realizar logout
         method: 'POST', // Método POST para logout
       }),
+      // Adicionado: Invalida o cache de qualquer consulta que fornece a tag 'User'
+      // Isso garante que 'getProfile' será re-buscado após o logout.
+      invalidatesTags: ['User'],
+      // NOVO: Adicionado onQueryStarted para resetar o estado da API após o logout
+      async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled; // Espera a mutação de logout ser concluída
+          // Reseta todo o estado do RTK Query. Isso limpa o cache de todas as consultas.
+          dispatch(apiSlice.util.resetApiState());
+        } catch (err) {
+          console.error("Erro ao fazer logout na API:", err);
+          // Em caso de erro na API, ainda é uma boa prática tentar resetar o estado local
+          dispatch(apiSlice.util.resetApiState());
+        }
+      },
     }),
 
     // Atualizar o perfil do usuário (para o usuário logado)
@@ -48,20 +63,18 @@ export const userApiSlice = apiSlice.injectEndpoints({
       query: (data) => ({
         url: `${USERS_URL}/profile`, // URL para atualizar o perfil
         method: 'PUT', // Método PUT para atualizar dados
-        body: data, 
+        body: data,
       }),
     }),
 
-    // *** NOVO: Obter o perfil do usuário logado ***
+    // Obter o perfil do usuário logado
     getProfile: builder.query({
       query: () => ({
         url: `${USERS_URL}/profile`, // URL para obter o perfil do usuário logado
       }),
-      // This query should not be cached for too long if user data changes frequently
-      // or if it's the primary source of truth for current user data.
-      // `providesTags` can be used for invalidation if other mutations affect it.
-      providesTags: ['User'], // Tag to invalidate this query if user data changes
-      keepUnusedDataFor: 60, // Keep data for a short period, adjust as needed
+      // Esta consulta fornece a tag 'User', o que permite que outras mutações a invalidem.
+      providesTags: ['User'],
+      keepUnusedDataFor: 60, // Mantém os dados por um curto período, ajuste conforme necessário
     }),
 
     // Obter lista de usuários (Admin)
@@ -115,8 +128,8 @@ export const {
   useLoginMutation,
   useLogoutMutation,
   useRegisterMutation,
-  useProfileMutation, // Existing hook for PUT /profile
-  useGetProfileQuery, // *** NOVO: Hook para GET /profile ***
+  useProfileMutation,
+  useGetProfileQuery,
   useGetUsersQuery,
   useDeleteUserMutation,
   useUpdateUserMutation,

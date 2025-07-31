@@ -5,13 +5,11 @@ import cookieParser from "cookie-parser";
 dotenv.config();
 import connectDB from "./config/db.js";
 import userRoutes from "./routes/userRoutes.js";
-import myClientsRoutes from './routes/myClientsRoutes.js'
-import aboutUsRoutes from './routes/aboutUsRoutes.js';
-import blogRoutes from './routes/blogRoutes.js';
+import myClientsRoutes from "./routes/myClientsRoutes.js";
+import aboutUsRoutes from "./routes/aboutUsRoutes.js";
+import blogRoutes from "./routes/blogRoutes.js";
 
 import { notFound, errorHandler } from "./middleware/errorMiddleware.js";
-
-
 
 const port = process.env.PORT || 5000;
 
@@ -24,13 +22,10 @@ app.use(express.urlencoded({ extended: true }));
 // cookie parser middleware
 app.use(cookieParser());
 
-
 app.use("/api/users", userRoutes);
 app.use("/api/about_us", aboutUsRoutes);
 app.use("/api/blogs", blogRoutes);
 app.use("/api/clients", myClientsRoutes);
-
-
 
 const __dirname = path.resolve(); // set __dirname to current directory
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
@@ -43,7 +38,7 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 //   app.use(express.static(path.join(__dirname, '/frontend/build')));
 
 //   // any route that is not api will be redirected to index.html
-//   app.get('*', (req, res) => 
+//   app.get('*', (req, res) =>
 //   res.sendFile(path.resolve(__dirname, 'frontend', 'build' , 'index.html')))
 // } else {
 //   app.get("/", (req, res) => {

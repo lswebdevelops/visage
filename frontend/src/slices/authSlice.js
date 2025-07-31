@@ -14,13 +14,14 @@ const authSlice = createSlice({
       state.userInfo = action.payload;
       localStorage.setItem("userInfo", JSON.stringify(action.payload));
     },
-    logout: (state, action) => { 
+    logout: (state) => {
       state.userInfo = null;
-      localStorage.removeItem("userInfo"); 
+      localStorage.removeItem("userInfo");
     },
   },
 });
 
+// Aqui você deve exportar as ações e o reducer, que está faltando no seu código:
 export const { setCredentials, logout } = authSlice.actions;
 
 export default authSlice.reducer;

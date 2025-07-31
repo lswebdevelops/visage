@@ -15,28 +15,39 @@ const LoginScreen = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  // Hook do RTK Query para a mutação de login
   const [login, { isLoading }] = useLoginMutation();
 
+  // Seleciona as informações do usuário do estado do Redux
   const { userInfo } = useSelector((state) => state.auth);
 
+  // Obtém o parâmetro de redirecionamento da URL
   const { search } = useLocation();
   const sp = new URLSearchParams(search);
   const redirect = sp.get("redirect") || "/";
 
+  // Efeito para lidar com o redirecionamento após o login
+  // Este useEffect será acionado SOMENTE quando userInfo se tornar verdadeiro (ou seja, o usuário logar)
+  // e fará isso de forma consistente após o estado do Redux ter sido atualizado.
   useEffect(() => {
     if (userInfo) {
       navigate(redirect); // Redireciona após login se userInfo estiver disponível
     }
-  }, [userInfo, redirect, navigate]);
+  }, [userInfo, redirect, navigate]); // Depende de userInfo para acionar a re-execução
 
+  // Função para lidar com o envio do formulário de login
   const submitHandler = async (e) => {
-    e.preventDefault();
+    e.preventDefault(); // Previne o comportamento padrão do formulário
     try {
-      const res = await login({ email, password }).unwrap(); // Realiza a mutação de login
-      dispatch(setCredentials({ ...res })); // Armazena as credenciais no Redux
-      navigate(redirect); // Redireciona após login
+      // Realiza a mutação de login e espera pela resposta
+      const res = await login({ email, password }).unwrap();
+      // Armazena as credenciais do usuário no estado do Redux
+      dispatch(setCredentials({ ...res }));
+      // A navegação agora é tratada exclusivamente pelo useEffect acima,
+      // que detectará a atualização de 'userInfo' no Redux.
     } catch (err) {
-      toast.error(err?.data?.message || err.error || "Erro inesperado"); // Mensagem de erro
+      // Exibe uma mensagem de erro em caso de falha no login
+      toast.error(err?.data?.message || err.error || "Erro inesperado");
     }
   };
 
@@ -66,12 +77,12 @@ const LoginScreen = () => {
           type="submit"
           variant="primary"
           className="mt-2"
-          disabled={isLoading} // Desabilita o botão enquanto está carregando
+          disabled={isLoading} // Desabilita o botão enquanto a requisição está em andamento
         >
           {isLoading ? "Carregando..." : "Entrar"}{" "}
           {/* Texto dinâmico no botão */}
         </Button>
-        {isLoading && <Loader />} {/* Exibe loader enquanto está carregando */}
+        {isLoading && <Loader />} {/* Exibe o loader enquanto está carregando */}
       </Form>
 
       <Row className="py-3">

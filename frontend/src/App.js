@@ -1,60 +1,75 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Outlet, useNavigate } from 'react-router-dom';
-import { ToastContainer } from 'react-toastify';
-import { Container } from 'react-bootstrap';
+// frontend/src/App.js
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Outlet, useNavigate } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import { Container } from "react-bootstrap";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "react-toastify/dist/ReactToastify.css";
 
-import Header from './components/Header';
-import Footer from './components/Footer';
-import Loader from './components/Loader';
+import Header from "./components/Header";
+import Footer from "./components/Footer";
+import Loader from "./components/Loader";
 
-import { useGetProfileQuery } from './slices/usersApiSlice';
-import { setCredentials, logout } from './slices/authSlice';
-
-import 'react-toastify/dist/ReactToastify.css';
+import { useGetProfileQuery } from "./slices/usersApiSlice";
+import { setCredentials, logout } from "./slices/authSlice";
+import { setInitialLoadComplete } from "./slices/appSlice";
 
 const App = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   const { userInfo } = useSelector((state) => state.auth);
-  const [profileLoaded, setProfileLoaded] = useState(false);
+  const initialLoadComplete = useSelector((state) => state.app.initialLoadComplete);
 
-  const localUserInfo = localStorage.getItem('userInfo');
+  const hasUserInfoInRedux = !!userInfo;
+  const hasUserInfoInLocalStorage = !!localStorage.getItem("userInfo");
 
-  // MODIFICADO: A consulta do perfil será pulada se:
-  // 1. Não houver informações do usuário no localStorage (primeira carga ou logout limpo)
-  // OU
-  // 2. Já houver informações do usuário no estado do Redux (indicando que o login já ocorreu via LoginScreen)
-  const shouldSkipProfileQuery = !localUserInfo || !!userInfo; 
+  const shouldSkipProfileQuery =
+    hasUserInfoInRedux || !hasUserInfoInLocalStorage;
 
   const {
     data: profileData,
     isLoading,
     isSuccess,
     isError,
+    error: profileError,
   } = useGetProfileQuery(undefined, {
-    skip: shouldSkipProfileQuery, // Usa a condição de pulo modificada
+    skip: shouldSkipProfileQuery,
   });
 
   useEffect(() => {
     if (isSuccess && profileData) {
       dispatch(setCredentials(profileData));
-      setProfileLoaded(true);
+      dispatch(setInitialLoadComplete(true));
     } else if (isError) {
+      console.error("Erro ao buscar perfil na inicialização:", profileError);
       dispatch(logout());
-      setProfileLoaded(true);
-    } else if (!isLoading && (shouldSkipProfileQuery || !userInfo)) {
-      setProfileLoaded(true);
+      dispatch(setInitialLoadComplete(true));
+    } else if (!isLoading && shouldSkipProfileQuery) {
+      dispatch(setInitialLoadComplete(true));
+    } else if (hasUserInfoInRedux && !initialLoadComplete) {
+      dispatch(setInitialLoadComplete(true));
     }
-  }, [dispatch, isSuccess, profileData, isError, isLoading, shouldSkipProfileQuery, userInfo]);
+  }, [
+    dispatch,
+    isSuccess,
+    profileData,
+    isError,
+    isLoading,
+    shouldSkipProfileQuery,
+    hasUserInfoInRedux,
+    initialLoadComplete,
+    profileError,
+  ]);
 
-  if (!profileLoaded) {
+  if (!initialLoadComplete) {
     return <Loader />;
   }
 
   return (
     <>
-      <Header />
+      <Header initialLoadComplete={initialLoadComplete} />
       <main className="py-3">
         <Container>
           <Outlet />

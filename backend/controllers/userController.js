@@ -1,11 +1,11 @@
 import asyncHandler from "../middleware/asyncHandler.js";
-import User from "../models/userModel.js"; // Certifique-se de que o modelo User está importado
+import User from "../models/userModel.js";
 import generateToken from "../utils/generateToken.js";
 import bcrypt from "bcryptjs";
 import crypto from "crypto";
 import sendEmail from "../utils/sendEmail.js";
 
-// @desc auth user & get token
+// @desc Autenticar usuário e obter token
 // @route POST /api/users/login
 // @access Public
 const authUser = asyncHandler(async (req, res) => {
@@ -19,7 +19,8 @@ const authUser = asyncHandler(async (req, res) => {
       _id: user._id,
       name: user.name,
       email: user.email,
-      isAdmin: user.isAdmin,
+      // MUDANÇA: Retorna o campo 'role' em vez de 'isAdmin'
+      role: user.role,
     });
   } else {
     res.status(401);
@@ -27,21 +28,28 @@ const authUser = asyncHandler(async (req, res) => {
   }
 });
 
-// @desc register user
+// @desc Registrar novo usuário
 // @route POST /api/users
 // @access Public
 const registerUser = asyncHandler(async (req, res) => {
   const { name, email, password } = req.body;
   const userExists = await User.findOne({ email });
+
   if (userExists) {
     res.status(400);
     throw new Error("User already exists");
   }
+
+  // MUDANÇA: O 'role' padrão será 'barbeiro' conforme definido no modelo.
+  // Você não precisa passá-lo aqui a menos que queira um registro de admin.
   const user = await User.create({
     name,
     email,
     password,
+    // Se você quiser registrar um admin via API, pode adicionar 'role: "admin"' aqui.
+    // Mas para registros públicos, o padrão do modelo ('barbeiro') é suficiente.
   });
+
   if (user) {
     generateToken(res, user._id);
 
@@ -49,7 +57,8 @@ const registerUser = asyncHandler(async (req, res) => {
       _id: user.id,
       name: user.name,
       email: user.email,
-      isAdmin: user.isAdmin,
+      // MUDANÇA: Retorna o campo 'role' em vez de 'isAdmin'
+      role: user.role,
     });
   } else {
     res.status(400);
@@ -57,7 +66,7 @@ const registerUser = asyncHandler(async (req, res) => {
   }
 });
 
-// @desc logout user / clear cookie
+// @desc Deslogar usuário / limpar cookie
 // @route POST /api/users/logout
 // @access private
 const logoutUser = asyncHandler(async (req, res) => {
@@ -68,7 +77,7 @@ const logoutUser = asyncHandler(async (req, res) => {
   res.status(200).json({ message: "Logged out successfully" });
 });
 
-// @desc get user profile
+// @desc Obter perfil do usuário
 // @route GET /api/users/profile
 // @access private
 const getUserProfile = asyncHandler(async (req, res) => {
@@ -78,7 +87,8 @@ const getUserProfile = asyncHandler(async (req, res) => {
       _id: user.id,
       name: user.name,
       email: user.email,
-      isAdmin: user.isAdmin,
+      // MUDANÇA: Retorna o campo 'role' em vez de 'isAdmin'
+      role: user.role,
     });
   } else {
     res.status(404);
@@ -86,7 +96,7 @@ const getUserProfile = asyncHandler(async (req, res) => {
   }
 });
 
-// @desc update user profile
+// @desc Atualizar perfil do usuário
 // @route PUT /api/users/profile
 // @access private
 const updateUserProfile = asyncHandler(async (req, res) => {
@@ -98,13 +108,16 @@ const updateUserProfile = asyncHandler(async (req, res) => {
     if (req.body.password) {
       user.password = req.body.password;
     }
+    // IMPORTANTE: Usuário comum não deve conseguir alterar seu próprio role aqui.
+    // O campo 'role' não é atualizado nesta rota.
 
     const updatedUser = await user.save();
     res.status(200).json({
       _id: updatedUser._id,
       name: updatedUser.name,
       email: updatedUser.email,
-      isAdmin: updatedUser.isAdmin,
+      // MUDANÇA: Retorna o campo 'role' em vez de 'isAdmin'
+      role: updatedUser.role,
     });
   } else {
     res.status(404);
@@ -112,20 +125,28 @@ const updateUserProfile = asyncHandler(async (req, res) => {
   }
 });
 
-// admin
-
-// @desc get users
+// Admin Controllers
+// @desc Obter todos os usuários
 // @route GET /api/users/
 // @access private/admin
 const getUsers = asyncHandler(async (req, res) => {
   const users = await User.find({});
-  res.status(200).json(users);
+  // MUDANÇA: Garante que 'role' seja incluído nos resultados
+  res.status(200).json(users.map(({ _id, name, email, role, createdAt, updatedAt }) => ({
+    _id,
+    name,
+    email,
+    role,
+    createdAt,
+    updatedAt
+  })));
 });
 
-// @desc get user by ID
+// @desc Obter usuário por ID
 // @route GET /api/users/:id
 // @access private/admin
 const getUserById = asyncHandler(async (req, res) => {
+  // MUDANÇA: Garante que 'role' é incluído (select('-password') já faz isso por padrão)
   const user = await User.findById(req.params.id).select("-password");
 
   if (user) {
@@ -136,13 +157,14 @@ const getUserById = asyncHandler(async (req, res) => {
   }
 });
 
-// @desc delete users
+// @desc Deletar usuários
 // @route DELETE /api/users/:id
 // @access private/admin
 const deleteUser = asyncHandler(async (req, res) => {
   const user = await User.findById(req.params.id);
   if (user) {
-    if (user.isAdmin) {
+    // MUDANÇA: Verifica o campo 'role' para determinar se é admin
+    if (user.role === 'admin') {
       res.status(400);
       throw new Error("Cannot delete admin user");
     }
@@ -154,7 +176,7 @@ const deleteUser = asyncHandler(async (req, res) => {
   }
 });
 
-// @desc update users (admin only)
+// @desc Atualizar usuários (somente admin)
 // @route PUT /api/users/:id
 // @access private/admin
 const updateUser = asyncHandler(async (req, res) => {
@@ -163,7 +185,17 @@ const updateUser = asyncHandler(async (req, res) => {
   if (user) {
     user.name = req.body.name || user.name;
     user.email = req.body.email || user.email;
-    user.isAdmin = Boolean(req.body.isAdmin);
+    
+    // MUDANÇA: Admin pode atualizar o 'role' do usuário
+    // Valida se o 'role' fornecido é válido e atualiza
+    if (req.body.role && ['barbeiro', 'admin'].includes(req.body.role)) {
+      user.role = req.body.role;
+    } else if (req.body.role) {
+      // Se um role inválido for fornecido, pode-se lançar um erro ou ignorar
+      res.status(400);
+      throw new Error("Invalid user role provided.");
+    }
+    // OBS: O campo 'isAdmin' (se ainda existisse) não seria mais usado aqui.
 
     const updatedUser = await user.save();
 
@@ -171,7 +203,8 @@ const updateUser = asyncHandler(async (req, res) => {
       _id: updatedUser._id,
       name: updatedUser.name,
       email: updatedUser.email,
-      isAdmin: updatedUser.isAdmin,
+      // MUDANÇA: Retorna o campo 'role'
+      role: updatedUser.role,
     });
   } else {
     res.status(404);
@@ -179,7 +212,7 @@ const updateUser = asyncHandler(async (req, res) => {
   }
 });
 
-// @desc get emails of users
+// @desc Obter emails de usuários
 // @route GET /api/users/emails
 // @access private/admin
 const getEmails = asyncHandler(async (req, res) => {
@@ -228,13 +261,10 @@ const forgotPassword = asyncHandler(async (req, res) => {
       subject: "Redefinição de Senha - Visage-App",
       message: message,
     });
-    // console.log(`Envie o email para: ${user.email} com o link: ${resetUrl}`);
     res.status(200).json({
       message: "Instruções de redefinição de senha enviadas para seu e-mail.",
     });
   } catch (err) {
-    // console.error("Erro ao enviar email de redefinição de senha:", err);
-
     user.resetPasswordToken = undefined;
     user.resetPasswordExpire = undefined;
     await user.save();
@@ -245,44 +275,37 @@ const forgotPassword = asyncHandler(async (req, res) => {
   }
 });
 
-// POST /api/users/reset-password
+// @desc Redefinir senha
+// @route POST /api/users/reset-password
+// @access Public
 const resetPassword = asyncHandler(async (req, res) => {
   const { token, password } = req.body;
 
-  // Verifica se o token e senha foram fornecidos
   if (!token || !password) {
     res.status(400);
     throw new Error("Token e nova senha são obrigatórios");
   }
 
-  // Hashes o token recebido do frontend para comparação com o token armazenado no DB
   const hashedTokenFromFrontend = crypto
     .createHash("sha256")
     .update(token)
     .digest("hex");
 
-  // console.log("Incoming token (from frontend, unhashed):", token);
-  // console.log("Hashed token for query:", hashedTokenFromFrontend);
-
-  // >>> LINHA CORRIGIDA: Buscar o usuário pelo token hashed e validade <<<
   const user = await User.findOne({
     resetPasswordToken: hashedTokenFromFrontend,
     resetPasswordExpire: { $gt: Date.now() },
   });
 
   if (!user) {
-    // console.error("Nenhum usuário encontrado para o token fornecido ou token expirado.");
     res.status(400);
     throw new Error("Token inválido ou expirado");
   }
 
-  // Atribua a senha em texto simples. O hook pre-save no userModel irá fazer o hashing.
   user.password = password;
+  user.resetPasswordToken = undefined;
+  user.resetPasswordExpire = undefined;
 
-  user.resetPasswordToken = undefined; // Limpa o token após o uso
-  user.resetPasswordExpire = undefined; // Limpa a expiração após o uso
-
-  await user.save(); // Isto irá acionar o hook pre-save para fazer o hashing da nova senha
+  await user.save();
 
   res.json({ message: "Senha redefinida com sucesso" });
 });

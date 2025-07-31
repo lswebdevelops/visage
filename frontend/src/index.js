@@ -1,9 +1,11 @@
+// frontend/src/index.js
+
 import React from "react";
 import ReactDOM from "react-dom/client";
 import HomeScreen from "./screens/HomeScreen";
 
 import PrivateRoute from "./components/PrivateRoute";
-import AdminRoute from "./components/AdminRoute";
+import AdminRoute from "./components/AdminRoute"; // Certifique-se de que esta linha está presente
 import LoginScreen from "./screens/LoginScreen";
 import RegisterScreen from "./screens/RegisterScreen";
 import ClientsScreen from "./screens/ClientsScreen";
@@ -40,31 +42,29 @@ const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />}>
       {/* Rotas Públicas */}
-  
       <Route path="/login/" element={<LoginScreen />} />
       <Route path="/register/" element={<RegisterScreen />} />
       <Route path="/forgot-password" element={<ForgotPasswordScreen />} />
       <Route path="/reset-password/:token" element={<ResetPasswordScreen />} />
       <Route path="/about_us" element={<AboutUsScreen />} />
-   
       <Route path="/blogs" element={<BlogScreen />} />
       <Route path="/blog/:id" element={<BlogDetailsScreen />} />
 
-      {/* Rotas Protegidas por PrivateRoute */}
+      {/* Rotas Protegidas por PrivateRoute (para usuários logados, barbeiros ou admins) */}
       <Route path="" element={<PrivateRoute />}>
-        <Route index={true} path="/" element={<HomeScreen />} /> {/* MOVIDO AQUI: Agora a Home Screen é protegida */}
-        <Route path="/search/:keyword" element={<HomeScreen />} /> {/* Também protegido */}
-        <Route path="/page/:pageNumber" element={<HomeScreen />} /> {/* Também protegido */}
+        <Route index={true} path="/" element={<HomeScreen />} />
+        <Route path="/search/:keyword" element={<HomeScreen />} />
+        <Route path="/page/:pageNumber" element={<HomeScreen />} />
         <Route
           path="/search/:keyword/page/:pageNumber"
           element={<HomeScreen />}
-        /> {/* Também protegido */}
+        />
         <Route path="/profile/" element={<ProfileScreen />} />
         <Route path="/clients/" element={<ClientsScreen />} />
       </Route>
 
-      {/* Rotas de Administração */}
-      <Route path="" element={<AdminRoute />}>
+      {/* Rotas de Administração (Protegidas por AdminRoute) */}
+      <Route path="" element={<AdminRoute />}> {/* Este é o AdminRoute que acabamos de criar */}
         <Route
           path="/admin/api_use/"
           element={<ClientTypeListScreen />}

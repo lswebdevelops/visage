@@ -1,3 +1,5 @@
+// frontend/src/components/Header.jsx
+
 import React, { useEffect } from "react";
 import { Navbar, Nav, Container, NavDropdown } from "react-bootstrap";
 import {
@@ -13,42 +15,34 @@ import { useNavigate, Link } from "react-router-dom";
 import { useLogoutMutation } from "../slices/usersApiSlice";
 import { logout } from "../slices/authSlice";
 
-const Header = () => {
+// Recebe initialLoadComplete como um prop
+const Header = ({ initialLoadComplete }) => { 
   const { userInfo } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [logoutApiCall] = useLogoutMutation();
 
   // Este useEffect é responsável por redirecionar para a página de login
-  // sempre que o userInfo se tornar nulo (ou seja, quando o usuário não estiver logado).
+  // somente se o carregamento inicial estiver completo E o usuário não estiver logado.
   useEffect(() => {
-    if (!userInfo) {
-      console.log("userInfo é nulo, redirecionando para /login");
+    // Só redireciona se o carregamento inicial do App.js estiver completo
+    // E se userInfo for nulo (usuário não logado)
+    if (initialLoadComplete && !userInfo) {
+      console.log("userInfo é nulo E carregamento inicial completo, redirecionando para /login");
       navigate("/login");
-    } else {
-      console.log("userInfo presente:", userInfo.name);
+    } else if (userInfo) {
+      console.log("userInfo presente:", userInfo.name, "Role:", userInfo.role);
     }
-  }, [userInfo, navigate]); // Depende de userInfo para re-executar quando ele muda
+  }, [userInfo, navigate, initialLoadComplete]); // Adicionado initialLoadComplete como dependência
 
   // Função para lidar com o logout do usuário
   const logoutHandler = async () => {
     try {
-      // 1. Tenta fazer a chamada para a API de logout no backend.
-      // É importante que esta chamada seja bem-sucedida para invalidar a sessão no servidor.
       await logoutApiCall().unwrap();
-
-      // 2. Se a chamada da API for bem-sucedida, despacha a ação de logout do Redux.
-      // Isso irá limpar o estado 'userInfo' no Redux e remover 'userInfo' do localStorage.
       dispatch(logout());
-
-      // O redirecionamento para /login será tratado pelo useEffect acima,
-      // que detectará a mudança de userInfo para null.
     } catch (err) {
-      // Em caso de erro na chamada da API de logout (ex: problema de rede, servidor),
-      // ainda assim queremos limpar o estado do cliente para garantir que o usuário
-      // não permaneça "logado" no frontend.
       console.error("Erro no logout da API:", err);
-      dispatch(logout()); // Garante que o estado local seja limpo
+      dispatch(logout()); 
     }
   };
 
@@ -110,7 +104,7 @@ const Header = () => {
               )}
 
               {/* Admin Dropdown */}
-              {userInfo?.isAdmin && (
+              {userInfo?.role === 'admin' && (
                 <NavDropdown title={<FaUserTie size={20} />} id="adminmenu">
                   <NavDropdown.Item as={Link} to="/admin/api_use" className="admin-menu-a">
                     Uso de API

@@ -28,25 +28,16 @@ const Footer = () => {
               {userInfo && (
                 <Nav.Link
                   as={Link}
-                  to="/myWorkout"
+                  to="/clients"
                   className="d-flex align-items-center me-3"
                 >
                   <FaDumbbell size={20} className="d-lg-none" />
                   <span className="ms-2 d-none d-lg-inline">
-                    Editar meu Treino
+                    Clientes
                   </span>
                 </Nav.Link>
               )}
-              <Link
-                as={Link}
-                to="/trainingTypes"
-                className="d-flex align-items-center me-3"
-              >
-                <FaWeightHanging size={20} className="d-lg-none" />
-                <span className="ms-2 d-none d-lg-inline">
-                  Todos os Treinos
-                </span>
-              </Link>
+            
 
               <Link as={Link} to="/blogs" className="d-flex align-items-center">
                 <FaNewspaper size={27} className="d-lg-none" />
@@ -55,7 +46,7 @@ const Footer = () => {
 
               <Link
                 as={Link}
-                to="/biography"
+                to="/about_us"
                 className="d-flex align-items-center icon-bio-footer"
               >
                 <FaUserAlt size={20} className="d-lg-none" />

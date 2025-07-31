@@ -4,7 +4,7 @@ import TrainingType from "../models/trainingTypeModel.js";
 import User from "../models/userModel.js"; // Import the User model
 
 // @desc    Get user's workout plan
-// @route   GET /api/myWorkout
+// @route   GET /api/clients
 // @access  Private
 const getMyWorkout = asyncHandler(async (req, res) => {
   // We no longer populate trainingType here, as the relevant data (name, category, description)
@@ -20,7 +20,7 @@ const getMyWorkout = asyncHandler(async (req, res) => {
 });
 
 // @desc    Add trainingType to user's workout plan
-// @route   POST /api/myWorkout
+// @route   POST /api/clients
 // @access  Private
 const createMyWorkout = asyncHandler(async (req, res) => {
   const { trainingTypeId } = req.body;
@@ -60,7 +60,7 @@ const createMyWorkout = asyncHandler(async (req, res) => {
 });
 
 // @desc    Update user's workout status and progress
-// @route   PUT /api/myWorkout/:id
+// @route   PUT /api/clients/:id
 // @access  Private
 const updateMyWorkout = asyncHandler(async (req, res) => {
   const { status, currentWorkoutIndex } = req.body;
@@ -96,7 +96,7 @@ const updateMyWorkout = asyncHandler(async (req, res) => {
 });
 
 // @desc    Remove trainingType from user's workout plan
-// @route   DELETE /api/myWorkout/:id
+// @route   DELETE /api/clients/:id
 // @access  Private
 const deleteMyWorkout = asyncHandler(async (req, res) => {
   const workout = await Workout.findOne({ user: req.user._id, _id: req.params.id });

@@ -29,9 +29,9 @@ app.use(cookieParser());
 
 app.use("/api/trainingTypes", trainingTypeRoutes);
 app.use("/api/users", userRoutes);
-app.use("/api/biography", biographyRoutes);
+app.use("/api/about_us", biographyRoutes);
 app.use("/api/blogs", blogRoutes);
-app.use("/api/myWorkout", myWorkoutRoutes);
+app.use("/api/clients", myWorkoutRoutes);
 
 
 

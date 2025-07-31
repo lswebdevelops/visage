@@ -232,18 +232,18 @@ main > * {
 }
 
 /*  bio */
-.div-image-biography {
+.div-image-about_us {
   text-align: center;
   margin-right: 16px;
 }
-.image-biography {
+.image-about_us {
   width: 250px;
   height: auto;
   border-radius: 8px;
   box-shadow: 18px 12px 25px rgba(10, 10, 10, 0.5),
     4px 14px 15px rgba(0, 0, 0, 0.05);
 }
-.image-biography {
+.image-about_us {
   position: relative;
   animation: moveFromLeft 1s ease-out; /* Adjust timing and easing as needed */
 }
@@ -321,7 +321,7 @@ main > * {
 }
 /********** Medium devices only **********/
 @media (min-width: 992px) and (max-width: 1199px) {
-  .image-biography {
+  .image-about_us {
     width: 200px;
     height: auto;
     border-radius: 8px;
@@ -329,7 +329,7 @@ main > * {
 }
 /********** Small devices only **********/
 @media (min-width: 768px) and (max-width: 991px) {
-  .image-biography {
+  .image-about_us {
     width: 200px;
     height: auto;
     border-radius: 8px;
@@ -337,7 +337,7 @@ main > * {
 }
 /********** Extra small devices only **********/
 @media (max-width: 767px) {
-  .div-image-biography {
+  .div-image-about_us {
     width: 300px;
     height: auto;
   }
@@ -354,7 +354,7 @@ main > * {
 }
 /********** Super extra small devices Only :-) (e.g., iPhone 4) **********/
 @media (max-width: 479px) {
-  .div-image-biography {
+  .div-image-about_us {
     width: 85%;
     height: auto;
   }

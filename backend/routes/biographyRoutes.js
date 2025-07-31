@@ -4,14 +4,14 @@ import Biography from '../models/biographyModel.js';
 
 const router = express.Router();
 
-// @desc    Get biography
-// @route   GET /api/biography
+// @desc    Get about_us
+// @route   GET /api/about_us
 // @access  Public
 router.get(
   '/',
   asyncHandler(async (req, res) => {
-    const biography = await Biography.find({});
-    res.json(biography);
+    const about_us = await Biography.find({});
+    res.json(about_us);
   })
 );
 

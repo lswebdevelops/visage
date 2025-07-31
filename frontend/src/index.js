@@ -47,7 +47,7 @@ const router = createBrowserRouter(
       <Route path="/register/" element={<RegisterScreen />} />
       <Route path="/forgot-password" element={<ForgotPasswordScreen />} />
       <Route path="/reset-password/:token" element={<ResetPasswordScreen />} />
-      <Route path="/biography" element={<BiographyScreen />} />
+      <Route path="/about_us" element={<BiographyScreen />} />
       <Route path="/trainingTypes" element={<TrainingTypesScreen />} />
       <Route path="/blogs" element={<BlogScreen />} />
       <Route path="/blog/:id" element={<BlogDetailsScreen />} />
@@ -62,17 +62,17 @@ const router = createBrowserRouter(
           element={<HomeScreen />}
         /> {/* Também protegido */}
         <Route path="/profile/" element={<ProfileScreen />} />
-        <Route path="/myWorkout/" element={<MyTrainingScreen />} />
+        <Route path="/clients/" element={<MyTrainingScreen />} />
       </Route>
 
       {/* Rotas de Administração */}
       <Route path="" element={<AdminRoute />}>
         <Route
-          path="/admin/trainingTypelist/"
+          path="/admin/api_use/"
           element={<TrainingTypeListScreen />}
         />
         <Route
-          path="/admin/trainingTypelist/:pageNumber/"
+          path="/admin/api_use/:pageNumber/"
           element={<TrainingTypeListScreen />}
         />
         <Route

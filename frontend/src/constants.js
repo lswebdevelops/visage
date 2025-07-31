@@ -6,4 +6,4 @@ export const USERS_URL = "/api/users";
 export const UPLOAD_URL = "/api/upload";
 export const POEMS_URL = "/api/poems"; 
 export const BLOGS_URL = "/api/blogs"; 
-export const MYWORKOUT_URL = "/api/myWorkout";
+export const MYWORKOUT_URL = "/api/clients";

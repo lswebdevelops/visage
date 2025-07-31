@@ -1,4 +1,3 @@
-
 import { Navbar, Nav, Container, NavDropdown } from "react-bootstrap";
 import {
   FaUser,
@@ -13,7 +12,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
 import { useLogoutMutation } from "../slices/usersApiSlice";
 import { logout } from "../slices/authSlice";
-
 
 const Header = () => {
   const { userInfo } = useSelector((state) => state.auth);
@@ -38,7 +36,11 @@ const Header = () => {
         <Container>
           {/* Logo */}
           <Navbar.Brand href="/">
-            <img src="https://res.cloudinary.com/dvnxrzpnl/image/upload/v1753968237/visage_logo_rc7zs1.png" alt="logo of visage" className="logo-hw" />
+            <img
+              src="https://res.cloudinary.com/dvnxrzpnl/image/upload/v1753968237/visage_logo_rc7zs1.png"
+              alt="logo of visage"
+              className="logo-hw"
+            />
           </Navbar.Brand>
 
           <Nav className="me-auto d-flex flex-row nav-header">
@@ -54,23 +56,21 @@ const Header = () => {
             {userInfo && (
               <Nav.Link
                 as={Link}
-                to="/myWorkout"
+                to="/clients"
                 className="d-flex align-items-center me-3"
               >
                 <FaDumbbell size={20} className="d-lg-none" />
-                <span className="ms-2 d-none d-lg-inline">
-                  Editar meu Treino
-                </span>
+                <span className="ms-2 d-none d-lg-inline">Clientes</span>
               </Nav.Link>
             )}
-            <Nav.Link
+            {/* <Nav.Link
               as={Link}
               to="/trainingTypes"
               className="d-flex align-items-center me-3"
             >
               <FaWeightHanging size={20} className="d-lg-none" />
               <span className="ms-2 d-none d-lg-inline">Todos os Treinos</span>
-            </Nav.Link>
+            </Nav.Link> */}
             <Nav.Link
               as={Link}
               to="/blogs"
@@ -81,7 +81,7 @@ const Header = () => {
             </Nav.Link>
             <Nav.Link
               as={Link}
-              to="/biography"
+              to="/about_us"
               className="d-flex align-items-center"
             >
               <FaUserAlt size={20} className="d-lg-none  icon-bio-header" />
@@ -126,10 +126,10 @@ const Header = () => {
                 <NavDropdown title={<FaUserTie size={20} />} id="adminmenu">
                   <NavDropdown.Item
                     as={Link}
-                    to="/admin/trainingTypelist"
+                    to="/admin/api_use"
                     className="admin-menu-a"
                   >
-                    Editar Treinos
+                    Use de Api
                   </NavDropdown.Item>
                   <NavDropdown.Item
                     as={Link}

@@ -1,13 +1,12 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import HomeScreen from "./screens/HomeScreen";
-import HomeTrainingTypeScreen from "./screens/HomeTrainingTypeScreen";
+
 import PrivateRoute from "./components/PrivateRoute";
 import AdminRoute from "./components/AdminRoute";
 import LoginScreen from "./screens/LoginScreen";
 import RegisterScreen from "./screens/RegisterScreen";
-import TrainingTypesScreen from "./screens/TrainingTypesScreen";
-import MyTrainingScreen from "./screens/MyTrainingScreen";
+import ClientsScreen from "./screens/ClientsScreen";
 
 import {
   createBrowserRouter,
@@ -41,13 +40,13 @@ const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />}>
       {/* Rotas Públicas */}
-      <Route path="/trainingType/:id" element={<HomeTrainingTypeScreen />} />
+  
       <Route path="/login/" element={<LoginScreen />} />
       <Route path="/register/" element={<RegisterScreen />} />
       <Route path="/forgot-password" element={<ForgotPasswordScreen />} />
       <Route path="/reset-password/:token" element={<ResetPasswordScreen />} />
       <Route path="/about_us" element={<AboutUsScreen />} />
-      <Route path="/trainingTypes" element={<TrainingTypesScreen />} />
+   
       <Route path="/blogs" element={<BlogScreen />} />
       <Route path="/blog/:id" element={<BlogDetailsScreen />} />
 
@@ -61,7 +60,7 @@ const router = createBrowserRouter(
           element={<HomeScreen />}
         /> {/* Também protegido */}
         <Route path="/profile/" element={<ProfileScreen />} />
-        <Route path="/clients/" element={<MyTrainingScreen />} />
+        <Route path="/clients/" element={<ClientsScreen />} />
       </Route>
 
       {/* Rotas de Administração */}

@@ -6,7 +6,7 @@ dotenv.config();
 import connectDB from "./config/db.js";
 import trainingTypeRoutes from "./routes/trainingTypeRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
-import myWorkoutRoutes from './routes/myWorkoutRoutes.js'
+import myClientsRoutes from './routes/myClientsRoutes.js'
 import aboutUsRoutes from './routes/aboutUsRoutes.js';
 import blogRoutes from './routes/blogRoutes.js';
 
@@ -31,7 +31,7 @@ app.use("/api/trainingTypes", trainingTypeRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/about_us", aboutUsRoutes);
 app.use("/api/blogs", blogRoutes);
-app.use("/api/clients", myWorkoutRoutes);
+app.use("/api/clients", myClientsRoutes);
 
 
 

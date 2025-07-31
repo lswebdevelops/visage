@@ -27,7 +27,7 @@ const App = () => {
   });
 
   useEffect(() => {
-    console.log('App useEffect triggered.');
+    // console.log('App useEffect triggered.');
     // console.log('userInfo (redux):', userInfo);
     // console.log('localStorage userInfo:', localStorage.getItem('userInfo'));
     // console.log('shouldSkipProfileQuery:', shouldSkipProfileQuery);
@@ -52,14 +52,12 @@ const App = () => {
     // Cenário 3: Consulta foi ignorada (nenhuma informação de usuário no localStorage)
     // ou a consulta terminou de carregar (sem erro/sucesso).
     // Isso garante que o loader desapareça rapidamente se nenhuma autenticação for esperada.
-    else if (!isLoadingProfile && shouldSkipProfileQuery) {
-        console.log('Cenário 3: Consulta de perfil finalizada ou ignorada, sem sessão de usuário ativa.');
+    else if (!isLoadingProfile && shouldSkipProfileQuery) {        
         setProfileLoaded(true);
     }
     // Cenário 4 (Fallback): Se não estiver carregando, não houver userInfo no Redux e profileLoaded ainda for falso.
     // Isso lida com o carregamento inicial quando não há usuário no localStorage ou Redux.
-    else if (!isLoadingProfile && !userInfo && !profileLoaded) {
-        console.log('Cenário 4: Fallback - Não está carregando, sem usuário no Redux, e perfil ainda não carregado.');
+    else if (!isLoadingProfile && !userInfo && !profileLoaded) {        
         setProfileLoaded(true);
     }
 

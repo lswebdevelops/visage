@@ -102,27 +102,9 @@ table th {
     transform: translateX(0); /* Move to its original position */
   }
 }
-.poems-containers-div {
-  display: flex;
-  justify-content: center;
-}
-.poems-containers-div p {
-  font-size: 0.9rem;
-}
-#poems-containers {
-  max-width: 1140px;
-}
-.poemLink {
-  text-decoration: none;
-}
-#poemTitle {
-  font-size: 1.5rem;
-  padding: 12px 12px 12px 0px;
-}
-#poemAuthor {
-  font-size: 1rem;
-  padding: 12px 12px 12px 0px;
-}
+
+
+
 
 @keyframes fadeIn {
   from {
@@ -164,30 +146,8 @@ main > * {
   margin: 0;
 }
 
-.upper-div-poem {
-  background-image: url("../../assets/library-book-book-read.jpg");
-  background-size: cover;
-  border-radius: 8px;
-  box-shadow: 8px 12px 25px rgba(0, 0, 0, 0.5), 0px 4px 15px rgba(0, 0, 0, 0.05);
-}
-#poem-content {
-  white-space: pre-wrap; /* Preserves line breaks and spaces */
-  text-align: center; /* Centers the text horizontally */
-  display: flex; /* Enables flexbox for better centering */
-  align-items: center; /* Centers the text vertically */
-  justify-content: center; /* Centers the text horizontally (flexbox) */
-  height: 100%;
-  word-wrap: break-word; /* Ensures long words break */
-  word-break: break-all; /* Forces breaking long words */
-  overflow-wrap: break-word; /* More reliable word breaking */
-  font-size: 1rem;
-}
 
-#poem-content {
-  position: relative;
-  opacity: 0; /* Start fully transparent */
-  animation: fadeIn 1.2s ease-out forwards; /* Wait for 1.2s and then become visible */
-}
+
 
 .poemTitle {
   font-size: 2rem;

@@ -26,7 +26,6 @@ import TrainingTypeListScreen from "./screens/admin/TrainingTypeListScreen";
 import TrainingTypeEditScreen from "./screens/admin/TrainingTypeEditScreen";
 import UserListScreen from "./screens/admin/UserListScreen";
 import UserEditScreen from "./screens/admin/UserEditScreen";
-
 import BlogListScreen from "./screens/admin/BlogListScreen";
 import BlogEditScreen from "./screens/admin/BlogEditScreen";
 import BlogScreen from "./screens/BlogScreen";
@@ -34,7 +33,7 @@ import BlogDetailsScreen from "./screens/BlogDetailsScreen";
 import BlogCreateScreen from "./screens/admin/BlogCreateScreen";
 import ForgotPasswordScreen from "./screens/ForgotPasswordScreen";
 
-import BiographyScreen from "./screens/BiographyScreen";
+import AboutUsScreen from "./screens/AboutUsScreen";
 import UsersEmailListScreen from "./screens/admin/UsersEmailListScreen";
 import ResetPasswordScreen from "./screens/ResetPasswordScreen";
 
@@ -47,7 +46,7 @@ const router = createBrowserRouter(
       <Route path="/register/" element={<RegisterScreen />} />
       <Route path="/forgot-password" element={<ForgotPasswordScreen />} />
       <Route path="/reset-password/:token" element={<ResetPasswordScreen />} />
-      <Route path="/about_us" element={<BiographyScreen />} />
+      <Route path="/about_us" element={<AboutUsScreen />} />
       <Route path="/trainingTypes" element={<TrainingTypesScreen />} />
       <Route path="/blogs" element={<BlogScreen />} />
       <Route path="/blog/:id" element={<BlogDetailsScreen />} />

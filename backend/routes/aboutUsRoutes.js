@@ -1,6 +1,6 @@
 import express from 'express';
 import asyncHandler from 'express-async-handler';
-import Biography from '../models/biographyModel.js';
+import AboutUs from '../models/aboutUsModel.js';
 
 const router = express.Router();
 
@@ -10,7 +10,7 @@ const router = express.Router();
 router.get(
   '/',
   asyncHandler(async (req, res) => {
-    const about_us = await Biography.find({});
+    const about_us = await AboutUs.find({});
     res.json(about_us);
   })
 );

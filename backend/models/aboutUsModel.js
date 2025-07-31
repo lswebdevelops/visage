@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const biographySchema = mongoose.Schema(
+const aboutUsSchema = mongoose.Schema(
   {
     name: {
       type: String,
@@ -20,6 +20,6 @@ const biographySchema = mongoose.Schema(
   }
 );
 
-const Biography = mongoose.model("Biography", biographySchema);
+const AboutUs = mongoose.model("AboutUs", aboutUsSchema);
 
-export default Biography;
+export default AboutUs;

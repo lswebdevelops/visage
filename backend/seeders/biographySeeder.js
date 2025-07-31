@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import connectDB from '../config/db.js';
-import Biography from '../models/biographyModel.js';
+import AboutUs from '../models/aboutUsModel.js';
 
 dotenv.config();
 
@@ -15,7 +15,7 @@ const importData = async () => {
       image: "https://res.cloudinary.com/dvnxrzpnl/image/upload/v1753722672/download_elmwmo.png",
     };
 
-    await Biography.create(about_us);
+    await AboutUs.create(about_us);
 
     console.log('Data Imported!');
     process.exit();

@@ -1,4 +1,4 @@
-const BiographyScreen = () => {
+const AboutUsScreen = () => {
   return (
     <div className="div-container-bio">
       <div className="div-container-bio">
@@ -43,4 +43,4 @@ const BiographyScreen = () => {
   );
 };
 
-export default BiographyScreen;
+export default AboutUsScreen;

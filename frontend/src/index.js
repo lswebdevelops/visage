@@ -74,7 +74,7 @@ const router = createBrowserRouter(
           element={<ClientTypeListScreen />}
         />
         <Route
-          path="/admin/trainingType/:id/edit"
+          path="/admin/clientType/:id/edit"
           element={<ClientTypeEditScreen />}
         />
         <Route path="/admin/userlist/" element={<UserListScreen />} />

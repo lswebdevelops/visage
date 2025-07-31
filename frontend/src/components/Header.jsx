@@ -65,7 +65,7 @@ const Header = () => {
             )}
             {/* <Nav.Link
               as={Link}
-              to="/trainingTypes"
+              to="/clientTypes"
               className="d-flex align-items-center me-3"
             >
               <FaWeightHanging size={20} className="d-lg-none" />

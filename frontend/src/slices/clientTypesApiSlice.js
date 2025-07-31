@@ -1,63 +1,63 @@
-import { TRAININGTYPES_URL, UPLOAD_URL } from "../constants";
+import { CLIENTTYPES_URL, UPLOAD_URL } from "../constants";
 import { apiSlice } from "./apiSlice";
 
 export const ClientTypesApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    getTrainingTypes: builder.query({
+    getClientTypes: builder.query({
       query: ({ keyword, pageNumber }) => ({
-        url: TRAININGTYPES_URL,
+        url: CLIENTTYPES_URL,
         params: {
           keyword,
           pageNumber,
         },
       }),
-      providesTags: ["TrainingType"] /** > reloads page */,
+      providesTags: ["ClientType"] /** > reloads page */,
       keepUnusedDataFor: 5,
     }),
-    getTrainingTypeDetails: builder.query({
-      query: (TrainingTypeId) => ({
-        url: `${TRAININGTYPES_URL}/${TrainingTypeId}`,
+    getClientTypeDetails: builder.query({
+      query: (ClientTypeId) => ({
+        url: `${CLIENTTYPES_URL}/${ClientTypeId}`,
       }),
       keepUnusedDataFor: 5,
     }),
-    createTrainingType: builder.mutation({
+    createClientType: builder.mutation({
       query: () => ({
-        url: TRAININGTYPES_URL,
+        url: CLIENTTYPES_URL,
         method: "POST",
       }),
       invalidatesTags: [
-        "TrainingType",
+        "ClientType",
       ] /* stops it from being cashed (always new data loading to the page) */,
     }),
-    updateTrainingType: builder.mutation({
-      query: ({ trainingTypeId, ...updatedTrainingType }) => ({
-        url: `/api/trainingTypes/${trainingTypeId}`,  // ID na URL
+    updateClientType: builder.mutation({
+      query: ({ clientTypeId, ...updatedClientType }) => ({
+        url: `/api/clientTypes/${clientTypeId}`,  // ID na URL
         method: "PUT",
-        body: updatedTrainingType,
+        body: updatedClientType,
       }),
     }),
-    deleteTrainingType: builder.mutation({
-      query: (TrainingTypeId) => ({
-        url: `${TRAININGTYPES_URL}/${TrainingTypeId}`,
+    deleteClientType: builder.mutation({
+      query: (ClientTypeId) => ({
+        url: `${CLIENTTYPES_URL}/${ClientTypeId}`,
         method: "DELETE",
       }),
     }),
     createReview: builder.mutation({
       query: (data) => ({
-        url: `${TRAININGTYPES_URL}/${data.TrainingTypeId}/reviews`,
+        url: `${CLIENTTYPES_URL}/${data.ClientTypeId}/reviews`,
         method: "POST",
         body: data,
       }),
-      invalidatesTags: ["TrainingType"],
+      invalidatesTags: ["ClientType"],
     }),    
   }),
 });
 
 export const {
-  useGetTrainingTypesQuery,
-  useGetTrainingTypeDetailsQuery,
-  useCreateTrainingTypeMutation,
-  useUpdateTrainingTypeMutation,  
-  useDeleteTrainingTypeMutation,
+  useGetClientTypesQuery,
+  useGetClientTypeDetailsQuery,
+  useCreateClientTypeMutation,
+  useUpdateClientTypeMutation,  
+  useDeleteClientTypeMutation,
   useCreateReviewMutation,
 } = ClientTypesApiSlice;

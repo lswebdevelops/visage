@@ -19,6 +19,6 @@ async function baseQueryWithAuth(args, api, extra) {
 
 export const apiSlice = createApi({
   baseQuery: baseQueryWithAuth, // Use the customized baseQuery
-  tagTypes: ['TrainingType', 'User'],
+  tagTypes: ['ClientType', 'User'],
   endpoints: (builder) => ({}),
 });

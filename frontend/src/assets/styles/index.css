@@ -10,7 +10,7 @@ main {
   color: #f8e825;
 }
 
-.trainingType-rating-h2 {
+.clientType-rating-h2 {
   border-radius: 8px;
 }
 .rating-text {
@@ -19,7 +19,7 @@ main {
   padding-left: 0.5rem;
 }
 
-.trainingType-title {
+.clientType-title {
   height: 2.5em; /* Set a fixed height */
   overflow: hidden; /* Hide overflow content */
   text-overflow: ellipsis; /* Add ellipsis for long text */
@@ -67,24 +67,24 @@ table th {
   opacity: 0.7;
   z-index: 4;
 }
-.available-trainingTypes {
+.available-clientTypes {
   padding: 10px 10px 10px 20px;
 }
-.upper-div-trainingType-div {
+.upper-div-clientType-div {
   display: flex;
   justify-content: center;
 }
-.upper-div-trainingType {
+.upper-div-clientType {
   margin-bottom: 25px;
   max-width: 1140px;
 }
-.upper-div-trainingType img {
+.upper-div-clientType img {
   box-shadow: 8px 2px 5px rgba(0, 0, 0, 0.3), 0px 4px 15px rgba(0, 0, 0, 0.05);
   border-radius: 8px;
   margin-bottom: 23px;
 }
 
-.image-trainingType-trainingType {
+.image-clientType-clientType {
   position: relative;
   animation: moveFromLeft 1.2s ease-out; /* Adjust timing and easing as needed */
 }
@@ -117,7 +117,7 @@ table th {
 
 main {
   position: relative;
-  /* background-image: url("../../assets/library-trainingType-trainingType-read.jpg"); */
+  /* background-image: url("../../assets/library-clientType-clientType-read.jpg"); */
   background-size: cover;
   margin: 0;
 }
@@ -139,9 +139,9 @@ main > * {
   z-index: 2;
 }
 
-.caroulsel-trainingType-right-side {
+.caroulsel-clientType-right-side {
   position: relative;
-  /* background-image: url("../../assets/library-trainingType-trainingType-read.jpg"); */
+  /* background-image: url("../../assets/library-clientType-clientType-read.jpg"); */
   /* background-size: cover; */
   margin: 0;
 }
@@ -158,7 +158,7 @@ main > * {
   text-align: right;
 }
 .poemsPageH1,
-.trainingTypesPageH1 {
+.clientTypesPageH1 {
   text-align: center;
   font-size: 3rem;
   margin: 10px;
@@ -172,7 +172,7 @@ main > * {
 .carousel {
   margin-top: 52px;
 }
-.container-div-trainingType-view {
+.container-div-clientType-view {
   background-color: none;
 }
 .main {
@@ -182,7 +182,7 @@ main > * {
 .container {
   max-width: 1960px;
 }
-.trainingType-description {
+.clientType-description {
   white-space: pre-wrap;
 }
 .h1-recent-titles {
@@ -217,7 +217,7 @@ main > * {
   }
 }
 .bio-content,
-.upper-div-trainingType p,
+.upper-div-clientType p,
 .poemContainer {
   position: relative;
   opacity: 0; /* Start fully transparent */
@@ -243,7 +243,7 @@ main > * {
 }
 
 .poemContainer,
-.trainingTypes-keyframe {
+.clientTypes-keyframe {
   position: relative;
   opacity: 0; /* Start fully transparent */
   animation: fadeIn 3s ease-out forwards; /* Wait for 1.2s and then become visible */
@@ -257,7 +257,7 @@ main > * {
     opacity: 1; /* Fully visible at the end */
   }
 }
-.trainingTypes-keyframe:hover,
+.clientTypes-keyframe:hover,
 .poemContainer:hover {
   scale: 1.02;
 }
@@ -667,73 +667,13 @@ a {
   font-size: 2rem;;
 }
 
-/* progress bar *//* progress bar */
-/* Container da barra de progresso */
-.workout-progress-bar-container {
-  width: 100%;
-  padding: 15px 0;
-  /* Removed: overflow-x: auto; white-space: nowrap; from here */
-}
-
-/* Garante que a linha de itens possa rolar e permanecer em uma linha no desktop e na maioria dos celulares */
-.workout-progress-bar-container .row > .col {
-  display: flex;
-  justify-content: center; /* Centraliza os itens na linha */
-  flex-wrap: nowrap; /* FORÇA os itens a permanecerem em uma única linha */
-  overflow-x: auto; /* Adicionado aqui para o scroll horizontal */
-  -webkit-overflow-scrolling: touch; /* Melhora o scroll em dispositivos iOS */
-  padding-bottom: 5px; /* Adiciona um pequeno padding para evitar que a barra de scroll cubra o conteúdo */
-  /* Adicionei um pouco de padding lateral para não colar nas bordas, se desejar */
-  padding-left: 10px; 
-  padding-right: 10px;
-}
 
 
-/* Item individual na barra de progresso */
-.workout-progress-item {
-  border: 1px solid #ccc;
-  padding: 10px 15px;
-  margin: 5px; /* Espaçamento horizontal entre os blocos */
-  min-width: 50px; /* Largura mínima para os blocos */
-  text-align: center;
-  font-weight: bold;
-  color: #333;
-  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
-  flex-shrink: 0; /* Impede que os itens encolham abaixo do min-width */
-  /* Removido flex-grow: 0; para permitir que cresçam um pouco se houver espaço e ficarem mais distribuídos */
-  flex-grow: 1; /* Permite que os itens cresçam para preencher o espaço disponível, mas dentro do min-width */
-  max-width: 120px; /* Define uma largura máxima para cada item, para que não fiquem gigantes em telas muito largas */
-  border-radius: 5px; /* Cantos levemente arredondados */
-  cursor: help; /* Indica que há um tooltip */
-  white-space: nowrap; /* Impede a quebra de linha do texto dentro do item */
-  overflow: hidden; /* Garante que o texto excedente seja escondido */
-  text-overflow: ellipsis; /* Adiciona "..." ao texto se ele for cortado */
-}
 
-/* Estilo para treinos já concluídos (verde escuro como na imagem) */
-.workout-progress-item.completed-past {
-  background-color: #5cb85c; /* Um verde um pouco mais escuro para "feito" */
-  color: white;
-  border-color: #4cae4c;
-}
 
-/* Estilo para o treino atual (verde claro / destaque como na imagem) */
-.workout-progress-item.current-active {
-  background-color: #a4e1a4; /* Verde mais claro para o ativo */
-  color: #333; /* Texto escuro para contraste */
-  border-color: #7ab77a; /* Borda um pouco mais escura */
-  box-shadow: 0 0 8px rgba(0, 0, 0, 0.2); /* Sutil sombra para destaque */
-}
-
-/* Estilo para treinos futuros (branco/padrão) */
-.workout-progress-item.pending-future {
-  background-color: white;
-  color: #333;
-  border-color: #ccc;
-}
 
 /* --- AJUSTES PARA O BOTÃO --- */
-.button-training-done {
+.button-client-done {
     max-width: 300px; /* Define uma largura máxima para o botão */
     width: 100%; /* Garante que ele ocupe 100% do espaço disponível até o max-width */
     margin-left: auto; /* Centraliza o botão */
@@ -742,17 +682,3 @@ a {
 }
 
 
-/* Regras para telas pequenas para melhor responsividade */
-
-/* Remover a media query de 767px que estava redefinindo o flex-wrap */
-/* A regra padrão do .workout-progress-bar-container .row > .col já forçará o nowrap */
-
-/* Apenas em telas MUITO pequenas (celulares pequenos, abaixo de 480px) os itens devem quebrar */
-
-
-/* Opcional: Para telas ainda menores, se 2 itens por linha for muito apertado */
-@media (max-width: 320px) {
-    .workout-progress-item {
-        flex-basis: calc(100% - 10px); /* 1 item por linha */
-    }
-}

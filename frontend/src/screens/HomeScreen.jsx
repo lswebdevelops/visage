@@ -3,7 +3,7 @@ const HomeScreen = () => {
   
 
   return (
-    <div className="trainingTypeHomeScreenContainer text-center py-4">
+    <div className="clientTypeHomeScreenContainer text-center py-4">
       
           home
       

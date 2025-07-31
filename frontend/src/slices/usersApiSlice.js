@@ -48,7 +48,7 @@ export const userApiSlice = apiSlice.injectEndpoints({
       query: (data) => ({
         url: `${USERS_URL}/profile`, // URL para atualizar o perfil
         method: 'PUT', // Método PUT para atualizar dados
-        body: data, // Dados a serem atualizados (como nome, email, currentWorkoutIndex, lastCompletedWorkout)
+        body: data, 
       }),
     }),
 

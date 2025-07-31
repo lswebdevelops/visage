@@ -20,8 +20,6 @@ const authUser = asyncHandler(async (req, res) => {
       name: user.name,
       email: user.email,
       isAdmin: user.isAdmin,
-      currentWorkoutIndex: user.currentWorkoutIndex,
-      lastCompletedWorkout: user.lastCompletedWorkout,
     });
   } else {
     res.status(401);
@@ -43,8 +41,6 @@ const registerUser = asyncHandler(async (req, res) => {
     name,
     email,
     password,
-    currentWorkoutIndex: 0,
-    lastCompletedWorkout: null,
   });
   if (user) {
     generateToken(res, user._id);
@@ -54,8 +50,6 @@ const registerUser = asyncHandler(async (req, res) => {
       name: user.name,
       email: user.email,
       isAdmin: user.isAdmin,
-      currentWorkoutIndex: user.currentWorkoutIndex,
-      lastCompletedWorkout: user.lastCompletedWorkout,
     });
   } else {
     res.status(400);
@@ -85,8 +79,6 @@ const getUserProfile = asyncHandler(async (req, res) => {
       name: user.name,
       email: user.email,
       isAdmin: user.isAdmin,
-      currentWorkoutIndex: user.currentWorkoutIndex,
-      lastCompletedWorkout: user.lastCompletedWorkout,
     });
   } else {
     res.status(404);
@@ -106,12 +98,6 @@ const updateUserProfile = asyncHandler(async (req, res) => {
     if (req.body.password) {
       user.password = req.body.password;
     }
-    if (req.body.currentWorkoutIndex !== undefined) {
-      user.currentWorkoutIndex = req.body.currentWorkoutIndex;
-    }
-    if (req.body.lastCompletedWorkout !== undefined) {
-      user.lastCompletedWorkout = req.body.lastCompletedWorkout;
-    }
 
     const updatedUser = await user.save();
     res.status(200).json({
@@ -119,8 +105,6 @@ const updateUserProfile = asyncHandler(async (req, res) => {
       name: updatedUser.name,
       email: updatedUser.email,
       isAdmin: updatedUser.isAdmin,
-      currentWorkoutIndex: updatedUser.currentWorkoutIndex,
-      lastCompletedWorkout: updatedUser.lastCompletedWorkout,
     });
   } else {
     res.status(404);
@@ -250,12 +234,14 @@ const forgotPassword = asyncHandler(async (req, res) => {
     });
   } catch (err) {
     // console.error("Erro ao enviar email de redefinição de senha:", err);
-  
+
     user.resetPasswordToken = undefined;
     user.resetPasswordExpire = undefined;
     await user.save();
     res.status(500);
-    throw new Error("Ocorreu um erro ao enviar o email de redefinição de senha. Tente novamente mais tarde.");
+    throw new Error(
+      "Ocorreu um erro ao enviar o email de redefinição de senha. Tente novamente mais tarde."
+    );
   }
 });
 

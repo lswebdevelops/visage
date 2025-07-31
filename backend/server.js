@@ -4,7 +4,6 @@ import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 dotenv.config();
 import connectDB from "./config/db.js";
-import trainingTypeRoutes from "./routes/trainingTypeRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import myClientsRoutes from './routes/myClientsRoutes.js'
 import aboutUsRoutes from './routes/aboutUsRoutes.js';
@@ -26,8 +25,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 
-
-app.use("/api/trainingTypes", trainingTypeRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/about_us", aboutUsRoutes);
 app.use("/api/blogs", blogRoutes);
